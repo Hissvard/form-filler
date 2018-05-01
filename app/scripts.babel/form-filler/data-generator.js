@@ -386,6 +386,12 @@ class DataGenerator {
   }
 
   getRandomDataForField(field, element) {
+    const pattern = element.getAttribute('pattern') || null;
+
+    if (pattern) {
+      return new RandExp(pattern).gen();
+    }
+
     switch (field.type) {
       case 'username':
         this.previousUsername = this.generateScrambledWord(5, 10, true);
