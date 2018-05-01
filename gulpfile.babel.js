@@ -10,6 +10,10 @@ import buffer from 'vinyl-buffer';
 import runSequence from 'run-sequence';
 import fs from 'fs';
 import nodeResolve from 'resolve';
+import composer from 'gulp-uglify/composer';
+import uglifyes from 'uglify-es';
+
+const uglify = composer(uglifyes, console);
 
 const $ = gulpLoadPlugins();
 const packageJson = JSON.parse(fs.readFileSync('./package.json'));
@@ -80,7 +84,7 @@ gulp.task('build-vendor', () => {
     .bundle()
     .pipe(source('vendors.js'))
     .pipe(buffer())
-    .pipe($.if(process.env.NODE_ENV === 'production', $.uglify({ mangle: false })))
+    .pipe($.if(process.env.NODE_ENV === 'production', uglify({ mangle: false })))
     .pipe(gulp.dest('./app/scripts'));
 });
 
@@ -99,7 +103,7 @@ gulp.task('script-content-script', () => {
 gulp.task('html', ['options-styles'], () => {
   return gulp.src('app/*.html')
     .pipe($.useref({ searchPath: ['.tmp', 'app', '.'] }))
-    .pipe($.if('*.js', $.uglify().on('error', err => console.error(err))))
+    .pipe($.if('*.js', uglify()))
     .pipe($.if('*.css', $.cleanCss({ compatibility: '*' })))
     .pipe(gulp.dest('dist'));
 });
@@ -110,7 +114,7 @@ gulp.task('chromeManifest', () => {
       buildnumber: formFillerVersion,
     }))
     .pipe($.if('*.css', $.cleanCss({ compatibility: '*' })))
-    .pipe($.if('*.js', $.uglify().on('error', err => console.error(err))))
+    .pipe($.if('*.js', uglify()))
     .pipe(gulp.dest('dist'));
 });
 

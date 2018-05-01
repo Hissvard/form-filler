@@ -19,7 +19,8 @@
     "react-sortable-hoc": "^0.6.8",
     "redux": "^3.7.2",
     "redux-form": "^7.1.2",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "uglify-es": "^3.3.9"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
@@ -37,7 +38,6 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
     "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.0",
     "gulp-chrome-manifest": "0.0.13",
     "gulp-clean-css": "^3.9.0",
     "gulp-if": "^2.0.2",
